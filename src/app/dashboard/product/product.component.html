@@ -1,0 +1,22 @@
+<div fxLayout="column" fxLayoutGap="10px">
+  <div  fxFlex="10">
+      <button (click)="addProduct()" mat-raised-button class="addbutton">Add Product</button>
+  </div>
+  <div fxFlex="90">
+<div  fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" >
+<div  *ngFor="let product of products;let i='index' "  (click)="show(i)" >
+<div [ngClass]="['pro']" >
+<span class="pro-header">{{product.productName}}</span>
+<p>{{product.description}}</p>
+<span>{{product.dateOfManufacture}}:{{product.dateOfExpiry}}</span>
+</div>
+<!-- <mat-card>
+<mat-card-title>{{product.productName}}</mat-card-title>
+<mat-card-content>{{product.description}}
+<span>{{product.dateOfManufacture}}:{{product.dateOfExpiry}}</span>
+</mat-card-content>
+</mat-card> -->
+</div>
+</div>
+</div>
+</div>
