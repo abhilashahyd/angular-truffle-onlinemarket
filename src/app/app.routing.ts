@@ -45,11 +45,10 @@ const routes: Routes = [
     }, {
       path: AppRoutes.ProductDetails,
       component: ProductdetailsComponent
+    }, {
+      path: AppRoutes.StoreOwnerDetails,
+      component: StoreownerdetailsComponent
     }
-    // , {
-    //   path: AppRoutes.StoreOwnerDetails,
-    //   component: StoreownerdetailsComponent
-    // }
   ]
   },
   {

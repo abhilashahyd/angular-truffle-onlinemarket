@@ -31,6 +31,7 @@ export class CommonService {
   constructor(private http: HttpClient) {
   //  }
   // constructor() {
+
     window.addEventListener('load', (event) => {
       this.bootstrapWeb3();
     });

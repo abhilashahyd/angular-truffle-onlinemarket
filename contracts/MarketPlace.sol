@@ -98,6 +98,13 @@ contract MarketPlace {
         return storeFrontMap[storeOwnerAddress];
     }
 
+    /**
+     * this function will be used for retrieving all the store owners
+     *
+     */
+    function getStoreOwners() public view returns(address[]) {
+        return storeOwners;
+    }
 
     /**
      * The market place can be destructed by only the super admin, that too when we have at least 75% of the store owners
