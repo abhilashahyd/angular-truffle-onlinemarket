@@ -1,14 +1,14 @@
 <h3 class="header"> Product Details</h3>
 <div  fxLayout="column">
-<div  fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" >
+<div  fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap  fxFlexFill fxLayoutGap="5%" >
 <mat-form-field>
-   <input matInput placeholder="Store Name">
+   <input matInput placeholder="Store Name" size="50%">
  </mat-form-field>
  <mat-form-field>
     <input matInput placeholder="Product Name">
   </mat-form-field>
 </div>
-<div >
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap  fxFlexFill fxLayoutGap="5%">
  <mat-form-field>
    <textarea matInput placeholder="Description"></textarea>
  </mat-form-field>
@@ -19,6 +19,8 @@
  <mat-form-field>
     <input matInput placeholder="Inventory">
  </mat-form-field>
- <button class="ui-button-primary" (click)="onSave()" mat-raised-button >Save</button>
-  <button class="ui-button-info" (click)="onSave()" mat-raised-button >Reset</button>
+</div>
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap  fxFlexFill fxLayoutGap="5%">
+<button class="ui-button-primary" (click)="onSave()" mat-raised-button >Save</button>
+ <button class="ui-button-info" (click)="onSave()" mat-raised-button >Reset</button>
 </div>

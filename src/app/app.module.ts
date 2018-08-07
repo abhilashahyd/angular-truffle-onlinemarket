@@ -16,6 +16,7 @@ import {
   MatMenuModule,
   MatSelectModule
 } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule } from './app.routing';
 import { ProductComponent } from './dashboard/product/product.component';
@@ -26,6 +27,9 @@ import { ProductdetailsComponent } from './dashboard/product/productdetails/prod
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+
+import { CommonService } from './shared/common.service';
+import { StoreownerdetailsComponent } from './dashboard/storeowner/storeownerdetails/storeownerdetails.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +40,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     StoreComponent,
     StoreownerComponent,
     StoredetailsComponent,
-    ProductdetailsComponent
+    ProductdetailsComponent,
+    StoreownerdetailsComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -47,6 +52,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatInputModule,
     MatToolbarModule,
     MatSidenavModule,
+    HttpClientModule,
     BrowserModule,
     FormsModule,
     HttpModule,
@@ -56,7 +62,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FlexLayoutModule,
     MatSelectModule
   ],
-  providers: [],
+  providers: [CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

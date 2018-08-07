@@ -10,6 +10,7 @@ import { StoredetailsComponent } from './dashboard/store/storedetails/storedetai
 import{DashboardComponent} from './dashboard/dashboard.component';
 import { AppRoutes } from './app-routes.enum';
 import { SignupComponent } from './signup/signup.component';
+import { StoreownerdetailsComponent } from './dashboard/storeowner/storeownerdetails/storeownerdetails.component';
 
 const routes: Routes = [
   {
@@ -35,7 +36,7 @@ const routes: Routes = [
     path: AppRoutes.StoreOwner,
     component: StoreownerComponent
   },
-   {
+ {
       path: AppRoutes.Stores,
       component: StoreComponent
     }, {
@@ -44,7 +45,12 @@ const routes: Routes = [
     }, {
       path: AppRoutes.ProductDetails,
       component: ProductdetailsComponent
-    }]
+    }
+    // , {
+    //   path: AppRoutes.StoreOwnerDetails,
+    //   component: StoreownerdetailsComponent
+    // }
+  ]
   },
   {
     path: AppRoutes.Login,

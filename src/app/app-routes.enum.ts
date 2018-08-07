@@ -8,5 +8,6 @@ export class AppRoutes {
   static readonly StoreDetails = 'stores/storedetails';
   static readonly ProductDetails = 'products/productdetails';
   static readonly StoreOwner = 'storeowner';
+  static readonly StoreOwnerDetails = 'storeowner/storeownerdetails';
   static readonly Products = 'products';
 }
