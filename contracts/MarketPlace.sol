@@ -1,7 +1,7 @@
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.22;
 
 import "./Store.sol";
-import "./Utils.sol";
+import "./library/Utils.sol";
 
 /**
  * There are a list of stores on a central marketplace where shoppers can purchase goods posted by the store owners.
@@ -59,21 +59,37 @@ contract MarketPlace {
      * A super administrator can create one or more administrator, who will have same access, except that
      * they cannot create another administrator
      */
-    function createAdminUser(address newAdminUser) public onlySuperAdmin {
+    function createAdminUser(address newAdminUser) public onlySuperAdmin returns(address){
         require(!Utils.existInTheArray(adminUsers, newAdminUser), "The address is already in the Admin group!");
 
         adminUsers.push(newAdminUser);
+
+        return newAdminUser;
+    }
+
+    /**
+    * This function verifies if an address has an admin access or not.
+    */
+    function checkAdmingAccess(address addressToVerify) view public returns(bool) {
+      for (uint index = 0; index <adminUsers.length; index++) {
+        if (adminUsers[index] == addressToVerify) {
+          return true;
+        }
+      }
+
+      return false;
     }
 
     /**
      * Any Admin shall be able to add a store owner.
      * Of course, we need to make sure that a given address is added only once.
     */
-    function createStoreOwner(address newStoreOwnerAddress) public onlyAdmin {
-        require( !Utils.existInTheArray(storeOwners, newStoreOwnerAddress),
-                "The store owner with the same address already exist!");
+    function createStoreOwner(address newStoreOwnerAddress) public onlyAdmin returns(bool){
+        require( !Utils.existInTheArray(storeOwners, newStoreOwnerAddress), "The store owner with the same address already exist!");
 
         storeOwners.push(newStoreOwnerAddress);
+
+        return true;
     }
 
     /**
@@ -83,28 +99,29 @@ contract MarketPlace {
      *
     */
     function createStoreFront( string storeName, string storeDescription ) public onlyStoreOwner returns(uint){
+        uint storeCount = storeFrontMap[msg.sender].length;
 
-        address[] storage stores = storeFrontMap[msg.sender];
-        stores[stores.length] = new Store( storeName, storeDescription, nextStoreId );
+        if (storeCount == 0) {
+          storeFrontMap[msg.sender].length = 1;
+        }
+
+        storeFrontMap[msg.sender][storeCount] = address(new Store( storeName, storeDescription, nextStoreId ));
 
         return nextStoreId++;
     }
 
+    function getStoreOwners() public view returns(address[]) {
+    return storeOwners;
+  }
+
     /**
-     * this function will be used for retrieving all the stores of a given store owner
+     * this function will be used for retriving all the stores of a given store owner
      *
      */
     function getStores(address storeOwnerAddress) public view returns(address[]) {
         return storeFrontMap[storeOwnerAddress];
     }
 
-    /**
-     * this function will be used for retrieving all the store owners
-     *
-     */
-    function getStoreOwners() public view returns(address[]) {
-        return storeOwners;
-    }
 
     /**
      * The market place can be destructed by only the super admin, that too when we have at least 75% of the store owners

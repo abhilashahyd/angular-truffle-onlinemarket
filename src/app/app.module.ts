@@ -29,6 +29,7 @@ import { SignupComponent } from './signup/signup.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { CommonService } from './shared/common.service';
+import { EthcontractService } from './shared/ethContract.service';
 import { StoreownerdetailsComponent } from './dashboard/storeowner/storeownerdetails/storeownerdetails.component';
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import { StoreownerdetailsComponent } from './dashboard/storeowner/storeownerdet
     FlexLayoutModule,
     MatSelectModule
   ],
-  providers: [CommonService],
+  providers: [CommonService, EthcontractService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
