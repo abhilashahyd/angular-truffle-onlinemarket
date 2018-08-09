@@ -1,0 +1,47 @@
+
+.loginform-container{
+    box-shadow:1px 1px 6px 1px grey;
+    padding:25px 35px;
+background-color:white;
+}
+
+.form-heading{
+    font-size: 24px;
+    margin: 0;
+    font-weight: 100;
+text-align: center;
+ color: #5453A4;
+    margin-bottom: 20px;
+
+}
+
+.form-paragraph
+{
+	 text-align: center;
+    font-size: 14px;
+    color: #A1A1A1;
+    margin-bottom: 35px;
+}
+
+.form-primary-button{
+    color: white;
+    background-color: #5453A4;
+}
+.form-primary-button:hover{
+    background-color:#ca3d1c;
+}
+.form-body{
+  text-align: center;
+}
+
+
+/* .loginform-container{
+    height: 398px;
+    width: 808px;
+    padding:20px 35px;
+} */
+
+
+.camp-signin{
+    padding-top:40px;
+}

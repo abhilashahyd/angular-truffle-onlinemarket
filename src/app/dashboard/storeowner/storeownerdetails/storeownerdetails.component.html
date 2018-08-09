@@ -2,7 +2,7 @@
 <div  fxLayout="column">
 <div  fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" >
 <mat-form-field>
-   <input matInput placeholder="Store Owner Address">
+   <input matInput placeholder="Store Owner Address"  [(ngModel)]="stOwner">
  </mat-form-field>
  <!-- <mat-form-field>
     <input matInput placeholder="Account Number">
@@ -31,8 +31,8 @@
  <mat-form-field>
     <input matInput placeholder="Pin">
   </mat-form-field> -->
-  <button  (click)="onSave()" mat-raised-button >Save</button>
-  <button  (click)="onSave()" mat-raised-button >Reset</button>
+  <button  (click)="addStoreOwnerDetails()" mat-raised-button >Save</button>
+  <button  (click)="reset()" mat-raised-button >Reset</button>
 </div>
 
 <!-- </div> -->

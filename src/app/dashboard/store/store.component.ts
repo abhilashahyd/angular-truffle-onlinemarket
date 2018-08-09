@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../shared/product.interface';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import {EthcontractService} from './../../shared/ethContract.service'
 
 @Component({
   selector: 'app-store',
@@ -9,88 +10,18 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 export class StoreComponent implements OnInit {
   stores: Product[];
-    constructor(private route: ActivatedRoute, private router: Router){}
+    constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService){}
 
     ngOnInit() {
-      this.stores= [{
-            "uniqueId":"10101",
-            "productName": "Samsung",
-            "description": " enhanced featured mobile",
-            "dateOfManufacture": "03-04-2018",
-            "dateOfExpiry": "03-04-2018",
-            "price" : 100,
-            "inventory": 100
-          },
-        {
-            "uniqueId":"10101",
-            "productName": "Nokia",
-            "description": "connecting everywhere",
-            "dateOfManufacture": "03-04-2018",
-            "dateOfExpiry": "03-04-2018",
-            "price" : 100,
-            "inventory": 100
-        },
-        {
-            "uniqueId":"10101",
-            "productName": "Micromax",
-            "description": "nothing like anything",
-            "dateOfManufacture": "03-04-2018",
-            "dateOfExpiry": "03-04-2018",
-            "price" : 100,
-            "inventory": 100
-        },{
-              "uniqueId":"10101",
-              "productName": "Samsung",
-              "description": " enhanced featured mobile",
-              "dateOfManufacture": "03-04-2018",
-              "dateOfExpiry": "03-04-2018",
-              "price" : 100,
-              "inventory": 100
-            },
-          {
-              "uniqueId":"10101",
-              "productName": "Nokia",
-              "description": "connecting everywhere",
-              "dateOfManufacture": "03-04-2018",
-              "dateOfExpiry": "03-04-2018",
-              "price" : 100,
-              "inventory": 100
-          },
-          {
-              "uniqueId":"10101",
-              "productName": "Micromax",
-              "description": "nothing like anything",
-              "dateOfManufacture": "03-04-2018",
-              "dateOfExpiry": "03-04-2018",
-              "price" : 100,
-              "inventory": 100
-          },{
-                "uniqueId":"10101",
-                "productName": "Samsung",
-                "description": " enhanced featured mobile",
-                "dateOfManufacture": "03-04-2018",
-                "dateOfExpiry": "03-04-2018",
-                "price" : 100,
-                "inventory": 100
-              },
-            {
-                "uniqueId":"10101",
-                "productName": "Nokia",
-                "description": "connecting everywhere",
-                "dateOfManufacture": "03-04-2018",
-                "dateOfExpiry": "03-04-2018",
-                "price" : 100,
-                "inventory": 100
-            },
-            {
-                "uniqueId":"10101",
-                "productName": "Micromax",
-                "description": "nothing like anything",
-                "dateOfManufacture": "03-04-2018",
-                "dateOfExpiry": "03-04-2018",
-                "price" : 100,
-                "inventory": 100
-            }];
+      console.log('OnInit: ' + this.ethcontractService);
+      console.log(this);
+      this.ethcontractService.getStores().then(function(stores){
+     this.stores = [stores];
+     console.log(stores);
+     // that.balance = acctInfo.balance;
+   }).catch(function(error){
+     console.log(error);
+   });
     }
     addStore(){
        this.router.navigate(['/dashboard/stores/storedetails']);

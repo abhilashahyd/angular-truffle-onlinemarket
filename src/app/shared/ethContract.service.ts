@@ -7,14 +7,12 @@ declare let window: any;
 
 let tokenAbi = require('./../../../build/contracts/MarketPlace.json');
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 
 export class EthcontractService {
   private web3Provider: null;
   private contracts: {};
-  const stContract = TruffleContract(tokenAbi);
+
 
   constructor() {
     if (typeof window.web3 !== 'undefined') {
@@ -29,11 +27,12 @@ export class EthcontractService {
   addStoreOwnerDetails(stOwneraddress) {
    console.log('Adding store owner');
    // let that = this;
-   this.stContract.setProvider(this.web3Provider);
+     var stContract = TruffleContract(tokenAbi);
+  stContract.setProvider(this.web3Provider);
 
    return new Promise((resolve, reject) => {
-     this.stContract.deployed().then(function(instance) {
-         return instance.createStoreOwner(stOwneraddress).then(function(status) {
+     stContract.deployed().then(function(instance) {
+         return instance.createStoreOwner('0x674967e937e03ae769aeb84d0eb46c892345d045', { from : '0x4b630b804e900939d09b674eb189be3946f10a15'}).then(function(status) {
          if(status) {
            console.log("Inside");
            console.log(status);
@@ -45,17 +44,64 @@ export class EthcontractService {
          return reject("Error in createStoreOwner service call");
        });
    });
- }
+ });
 }
 
 getStoreOwners() {
  console.log('Getting store owner');
  // let that = this;
- this.stContract.setProvider(this.web3Provider);
+   var stContract = TruffleContract(tokenAbi);
+stContract.setProvider(this.web3Provider);
 
  return new Promise((resolve, reject) => {
-   this.stContract.deployed().then(function(instance) {
-       return instance.getStoreOwners().then(function(status) {
+   stContract.deployed().then(function(instance) {
+     console.log(instance);
+       return instance.getStoreOwners().then(function(storeowners) {
+       if(status) {
+         console.log("Inside");
+         console.log(storeowners);
+         return resolve(storeowners);
+       }
+     }).catch(function(error){
+       console.log(error);
+
+       return reject("Error in createStoreOwner service call");
+     });
+ });
+});
+}
+
+getStores() {
+ console.log('Getting stores');
+ // let that = this;
+   var stContract = TruffleContract(tokenAbi);
+stContract.setProvider(this.web3Provider);
+
+ return new Promise((resolve, reject) => {
+   stContract.deployed().then(function(instance) {
+       return instance.getStores().then(function(stores) {
+       if(status) {
+         console.log("Inside");
+         console.log(stores);
+         return resolve(stores);
+       }
+     }).catch(function(error){
+       console.log(error);
+
+       return reject("Error in createStoreOwner service call");
+     });
+ });
+});
+}
+createStoreFront(storename,description) {
+ console.log('Adding store owner');
+ // let that = this;
+   var stContract = TruffleContract(tokenAbi);
+stContract.setProvider(this.web3Provider);
+
+ return new Promise((resolve, reject) => {
+   stContract.deployed().then(function(instance) {
+       return instance.createStoreFront(storename,description, { from : '0x4b630b804e900939d09b674eb189be3946f10a15'}).then(function(status) {
        if(status) {
          console.log("Inside");
          console.log(status);
@@ -67,66 +113,7 @@ getStoreOwners() {
        return reject("Error in createStoreOwner service call");
      });
  });
+});
 }
-}
- //   try {
- //     const deployedStoreOwner = await this.MarketPlace.deployed();
- //     console.log(deployedStoreOwner);
- //     // console.log('Account', this.model.account);
- //     const StoreOwners = await deployedStoreOwner.createStoreOwner.call(stOwneraddress);
- //     console.log('Found store owners: ' + StoreOwners);
- //     this.storeOwner = StoreOwners;
- //   } catch (e) {
- //     console.log(e);
- //     // this.setStatus('Error getting balance; see log.');
- //   }
- // }
 
-  // getAccountInfo() {
-  //   return new Promise((resolve, reject) => {
-  //     window.web3.eth.getCoinbase(function(err, account) {
-  //
-  //       if(err === null) {
-  //         web3.eth.getBalance(account, function(err, balance) {
-  //           if(err === null) {
-  //             return resolve({fromAccount: account, balance:web3.fromWei(balance, "ether")});
-  //           } else {
-  //             return reject("error!");
-  //           }
-  //         });
-  //       }
-  //     });
-  //   });
-  // }
-  //
-  // transferEther(
-  //   _transferFrom,
-  //   _transferTo,
-  //   _amount,
-  //   _remarks
-  // ) {
-  //   let that = this;
-  //
-  //   return new Promise((resolve, reject) => {
-  //     let paymentContract = TruffleContract(tokenAbi);
-  //     paymentContract.setProvider(that.web3Provider);
-  //
-  //     paymentContract.deployed().then(function(instance) {
-  //         return instance.transferFund(
-  //           _transferTo,
-  //           {
-  //             from:_transferFrom,
-  //             value:web3.toWei(_amount, "ether")
-  //           });
-  //       }).then(function(status) {
-  //         if(status) {
-  //           return resolve({status:true});
-  //         }
-  //       }).catch(function(error){
-  //         console.log(error);
-  //
-  //         return reject("Error in transferEther service call");
-  //       });
-  //   });
-  // }
 }

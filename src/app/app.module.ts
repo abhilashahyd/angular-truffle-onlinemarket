@@ -14,7 +14,8 @@ import {
   MatSidenavModule,
   MatToolbarModule,
   MatMenuModule,
-  MatSelectModule
+  MatSelectModule,
+  MatCheckboxModule
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -58,6 +59,7 @@ import { StoreownerdetailsComponent } from './dashboard/storeowner/storeownerdet
     FormsModule,
     HttpModule,
     MetaModule,
+    MatCheckboxModule,
     AppRoutingModule,
     MatMenuModule,
     FlexLayoutModule,

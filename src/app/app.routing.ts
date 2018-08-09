@@ -16,7 +16,7 @@ const routes: Routes = [
   {
     path: AppRoutes.Base,
     pathMatch: 'full',
-    redirectTo: AppRoutes.Dashboard
+    redirectTo: AppRoutes.Login//AppRoutes.Dashboard
     // canActivate: [LoggedInGuard]
   },
     {
@@ -55,8 +55,9 @@ const routes: Routes = [
     path: AppRoutes.Login,
     component: LoginComponent
     // canActivate: [LoggedInGuard]
-  },
-  { path: AppRoutes.Signup, component: SignupComponent }
+  }
+  // ,
+  // { path: AppRoutes.Signup, component: SignupComponent }
   // { path: AppRoutes.Signup, component: SignupComponent },
 ];
 
