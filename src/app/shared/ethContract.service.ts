@@ -6,6 +6,7 @@ declare let require: any;
 declare let window: any;
 
 let tokenAbi = require('./../../../build/contracts/MarketPlace.json');
+let storeAbi = require('./../../../build/contracts/Store.json');
 
 @Injectable()
 
@@ -32,7 +33,7 @@ export class EthcontractService {
 
    return new Promise((resolve, reject) => {
      stContract.deployed().then(function(instance) {
-         return instance.createStoreOwner('0x674967e937e03ae769aeb84d0eb46c892345d045', { from : '0x4b630b804e900939d09b674eb189be3946f10a15'}).then(function(status) {
+         return instance.createStoreOwner('0x674967e937e03ae769aeb84d0eb46c892345d045', { from : '0x674967e937e03ae769aeb84d0eb46c892345d045'}).then(function(status) {
          if(status) {
            console.log("Inside");
            console.log(status);
@@ -71,6 +72,31 @@ stContract.setProvider(this.web3Provider);
 });
 }
 
+createAdminUser(addressUser){
+  console.log('Adding store owner');
+  // let that = this;
+    var stContract = TruffleContract(tokenAbi);
+ stContract.setProvider(this.web3Provider);
+
+  return new Promise((resolve, reject) => {
+    stContract.deployed().then(function(instance) {
+      console.log('inside');
+      console.log(addressUser);
+        return instance.createAdminUser(addressUser, { from : '0x674967e937e03ae769aeb84d0eb46c892345d045'}).then(function(status) {
+        if(status) {
+          console.log("Inside");
+          console.log(status);
+          return resolve({status:true});
+        }
+      }).catch(function(error){
+        console.log(error);
+
+        return reject("Error in createAdminUser service call");
+      });
+  });
+ });
+
+}
 getStores() {
  console.log('Getting stores');
  // let that = this;
@@ -101,7 +127,7 @@ stContract.setProvider(this.web3Provider);
 
  return new Promise((resolve, reject) => {
    stContract.deployed().then(function(instance) {
-       return instance.createStoreFront(storename,description, { from : '0x4b630b804e900939d09b674eb189be3946f10a15'}).then(function(status) {
+       return instance.createStoreFront(storename,description, { from : '0x674967e937e03ae769aeb84d0eb46c892345d045'}).then(function(status) {
        if(status) {
          console.log("Inside");
          console.log(status);
