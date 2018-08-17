@@ -18,15 +18,28 @@ activeAccount : string;
     }
  signin(){
     console.log(this.activeAccount);
-    console.log(this.adminFlag);
-    this.ethcontractService.createAdminUser(this.activeAccount).then(function(status){
+    // console.log(this.adminFlag);
+       var that=this;
+    this.ethcontractService.checkAdmingAccess(this.activeAccount).then(function(status){
     //'674967e937e03ae769aeb84d0eb46c892345d045', { from :  '4b630b804e900939d09b674eb189be3946f10a15'}).then(function(status){
    // that.storeOwner = stowner;
-   console.log(status);
+
+   console.log('Output'+status);
+   if(!status){
+      that.ethcontractService.createAdminUser(that.activeAccount).then(function(status){
+      //'674967e937e03ae769aeb84d0eb46c892345d045', { from :  '4b630b804e900939d09b674eb189be3946f10a15'}).then(function(status){
+     // that.storeOwner = stowner;
+     console.log('Inside create'+status);
+     // that.balance = acctInfo.balance;
+   }).catch(function(error){
+     console.log(error);
+   });
+ }
    // that.balance = acctInfo.balance;
  }).catch(function(error){
    console.log(error);
  });
+
     this.router.navigate(['/dashboard']);
  }
 }
