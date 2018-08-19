@@ -107,6 +107,30 @@ checkAllAccess(){
  });
 }
 
+getAdminUsers() {
+ console.log('Getting store owner');
+ // let that = this;
+   var stContract = TruffleContract(tokenAbi);
+stContract.setProvider(this.web3Provider);
+
+ return new Promise((resolve, reject) => {
+   stContract.deployed().then(function(instance) {
+     console.log(instance);
+       return instance.getAdminUsers().then(function(admins) {
+       if(admins!= undefined) {
+         console.log("Inside");
+         console.log(admins);
+         return resolve(admins);
+       }
+     }).catch(function(error){
+       console.log(error);
+
+       return reject("Error in getAdminUsers service call");
+     });
+ });
+});
+}
+
 getStoreOwners() {
  console.log('Getting store owner');
  // let that = this;
@@ -125,7 +149,7 @@ stContract.setProvider(this.web3Provider);
      }).catch(function(error){
        console.log(error);
 
-       return reject("Error in createStoreOwner service call");
+       return reject("Error in getStoreOwners service call");
      });
  });
 });
@@ -193,9 +217,10 @@ console.log(activeAct);
  return new Promise((resolve, reject) => {
    stContract.deployed().then(function(instance) {
        return instance.createStoreFront(storename,description, { from : activeAct}).then(function(status) {
+   console.log("Inside1");
          console.log(status);
        if(status!= undefined) {
-         console.log("Inside");
+         console.log("Inside2");
          console.log(status);
          return resolve({status:true});
        }

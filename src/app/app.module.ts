@@ -15,8 +15,11 @@ import {
   MatToolbarModule,
   MatMenuModule,
   MatSelectModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatDialogModule
 } from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule } from './app.routing';
@@ -36,6 +39,7 @@ import { AdminComponent } from './dashboard/admin/admin.component';
 import { AddproductComponent } from './dashboard/product/addproduct/addproduct.component';
 import { AddstoreComponent } from './dashboard/store/addstore/addstore.component';
 import { AddstoreownerComponent } from './dashboard/storeowner/addstoreowner/addstoreowner.component';
+import { AddadminComponent } from './dashboard/admin/addadmin/addadmin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +55,8 @@ import { AddstoreownerComponent } from './dashboard/storeowner/addstoreowner/add
     AdminComponent,
     AddproductComponent,
     AddstoreComponent,
-    AddstoreownerComponent
+    AddstoreownerComponent,
+    AddadminComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -71,8 +76,10 @@ import { AddstoreownerComponent } from './dashboard/storeowner/addstoreowner/add
     AppRoutingModule,
     MatMenuModule,
     FlexLayoutModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule//, MatDialogRef, MAT_DIALOG_DATA
   ],
+   entryComponents: [AddadminComponent, AdminComponent],
   providers: [CommonService, EthcontractService],
   bootstrap: [AppComponent]
 })
