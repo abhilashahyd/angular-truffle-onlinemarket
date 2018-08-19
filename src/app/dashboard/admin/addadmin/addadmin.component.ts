@@ -15,4 +15,6 @@ constructor(
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  ngOnInit() {}
 }

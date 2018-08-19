@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { StoreOwner } from '../../shared/storeowner.interface';
-import { CommonService } from '../../shared/common.service';
+// import { StoreOwner } from '../../shared/storeowner.interface';
+// import { CommonService } from '../../shared/common.service';
 // import {Web3Service} from '../../util/web3.service';
 import {EthcontractService} from './../../shared/ethContract.service'
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -23,7 +23,7 @@ export class StoreownerComponent implements OnInit {
     ngOnInit() {
       this.ethcontractService.getStoreOwners().then(stOwner=>{
         console.log(stOwner);
-        this.storeOwners = stOwner;
+        this.storeOwners = [stOwner];
       });
       }
 

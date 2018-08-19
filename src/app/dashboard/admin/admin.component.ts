@@ -17,7 +17,7 @@ constructor(private route: ActivatedRoute, private router: Router, private ethco
   ngOnInit() {
     this.ethcontractService.getAdminUsers().then(admins=>{
       console.log(admins);
-      this.admins= admins;
+      this.admins= [admins];
     });
   }
 

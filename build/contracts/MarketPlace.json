@@ -11340,8 +11340,16 @@
       },
       "address": "0x08815e8e7e2b5533f19b2266e22f1f9b740b361b",
       "transactionHash": "0x0367d43e9848b626c29c6cd4ef4ce886c1c4d87425a8a10fd2c26e04c5294501"
+    },
+    "1534685487926": {
+      "events": {},
+      "links": {
+        "Utils": "0x63b4455d59fa0c86ecf460ccd2040086467511d3"
+      },
+      "address": "0xee405c7a77db10b7d3285451f14cd3e758291740",
+      "transactionHash": "0xf4a7160cd6afe2d3e36b0f5df35d9b2d72354bce5ce4029927beb96e8a6d90b9"
     }
   },
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-08-19T13:24:08.471Z"
+  "updatedAt": "2018-08-19T16:23:29.079Z"
 }
