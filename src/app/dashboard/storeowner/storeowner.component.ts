@@ -13,33 +13,24 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./storeowner.component.css']
 })
 export class StoreownerComponent implements OnInit {
-  storeOwner: any[];
+  storeOwners: any[];
   MarketPlace : any;
 
     constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService){
-        console.log('Constructor: ' + ethcontractService);
+        // console.log('Constructor: ' + ethcontractService);
     }
 
     ngOnInit() {
-      // this.commonService.getProducts().subscribe(products=>{
-      //   this.products= products.products;
-      // });
-      console.log('OnInit: ' + this.ethcontractService);
-      console.log(this);
-      this.ethcontractService.getStoreOwners().then(function(stowner){
-     this.storeOwner = [stowner];
-     console.log(stowner);
-     // that.balance = acctInfo.balance;
-   }).catch(function(error){
-     console.log(error);
-   });
-
-    }
+      this.ethcontractService.getStoreOwners().then(stOwner=>{
+        console.log(stOwner);
+        this.storeOwners = stOwner;
+      });
+      }
 
 
     addStoreOwner(){
       // this.addStoreOwnerDetails('0x674967e937e03AE769Aeb84D0Eb46c892345d045');
-       this.router.navigate(['/dashboard/storeowner/storeownerdetails']);
+       this.router.navigate(['/dashboard/storeowner/addstoreowner']);
     }
    show(rindex){
      this.router.navigate(['/dashboard/storeowner/storeownerdetails',{id:rindex}]);

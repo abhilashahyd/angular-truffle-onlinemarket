@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-// import {Web3Service} from './../../util/web3.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {EthcontractService} from './../../../shared/ethContract.service'
 
+
 @Component({
-  selector: 'app-storeownerdetails',
-  templateUrl: './storeownerdetails.component.html',
-  styleUrls: ['./storeownerdetails.component.css']
+  selector: 'app-addstoreowner',
+  templateUrl: './addstoreowner.component.html',
+  styleUrls: ['./addstoreowner.component.css']
 })
-export class StoreownerdetailsComponent implements OnInit {
+export class AddstoreownerComponent implements OnInit {
 
   stOwner: any;
    constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService) {
@@ -16,11 +16,6 @@ export class StoreownerdetailsComponent implements OnInit {
   }
 
    ngOnInit() {
-     this.route.params.subscribe((params: Params) => {
-       console.log(params);
-     this.stOwner= params['id'];
-     console.log(this.stOwner);
-     });
    }
     addStoreOwnerDetails() {
          console.log('Adding new storeowner');

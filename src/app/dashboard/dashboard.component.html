@@ -4,9 +4,17 @@
   <mat-sidenav mode="side" opened class="sidebar">
     <button mat-button [matMenuTriggerFor]="menu">Dashboard</button>
     <mat-menu #menu="matMenu">
-    <button mat-menu-item  [routerLink]="['/dashboard/storeowner']">Browse Store Owners</button>
+      <div *ngIf="isSuperAdmin">
+      <button mat-menu-item  [routerLink]="['/dashboard/admin']">Browse Accounts and Admins</button>
+      </div>
+      <div *ngIf="isSuperAdmin || isAdmin">
+        <button mat-menu-item  [routerLink]="['/dashboard/storeowner']">Browse Store Owners</button>
+      </div>
+      <div *ngIf="isStoreOwner">
+        <button mat-menu-item  [routerLink]="['/dashboard/stores']">My Stores</button>
+      </div>
     <button mat-menu-item  [routerLink]="['/dashboard/stores']">Browse Stores</button>
-    <button mat-menu-item  [routerLink]="['/dashboard/products']">Browse Products</button>
+    <!-- <button mat-menu-item  [routerLink]="['/dashboard/products']">Browse Products</button> -->
   </mat-menu>
   </mat-sidenav>
   <mat-sidenav-content>

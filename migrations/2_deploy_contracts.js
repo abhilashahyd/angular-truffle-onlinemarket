@@ -9,7 +9,7 @@ module.exports = function(deployer) {
   // deployer.link(ConvertLib, MetaCoin);
   // deployer.deploy(MetaCoin);
   deployer.deploy(Utils);
-    deployer.deploy(Store, "SuperAdmin Store", "This shall never be used by anyone!", 0);
+  deployer.deploy(Store, "SuperAdmin Store", "This shall never be used by anyone!", 0, "");
     deployer.link(Utils, MarketPlace);
   deployer.deploy(MarketPlace);
 };

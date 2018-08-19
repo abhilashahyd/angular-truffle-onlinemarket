@@ -10,36 +10,23 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class LoginComponent implements OnInit {
 adminFlag :boolean;
 activeAccount : string;
+accessType : string;
 
   constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService) { }
 
   ngOnInit() {
     this.adminFlag=false;
     }
+
  signin(){
     console.log(this.activeAccount);
-    // console.log(this.adminFlag);
-       var that=this;
-    this.ethcontractService.checkAdmingAccess(this.activeAccount).then(function(status){
-    //'674967e937e03ae769aeb84d0eb46c892345d045', { from :  '4b630b804e900939d09b674eb189be3946f10a15'}).then(function(status){
-   // that.storeOwner = stowner;
-
-   console.log('Output'+status);
-   if(!status){
-      that.ethcontractService.createAdminUser(that.activeAccount).then(function(status){
-      //'674967e937e03ae769aeb84d0eb46c892345d045', { from :  '4b630b804e900939d09b674eb189be3946f10a15'}).then(function(status){
-     // that.storeOwner = stowner;
-     console.log('Inside create'+status);
-     // that.balance = acctInfo.balance;
-   }).catch(function(error){
-     console.log(error);
-   });
- }
-   // that.balance = acctInfo.balance;
- }).catch(function(error){
-   console.log(error);
- });
-
-    this.router.navigate(['/dashboard']);
- }
+    var status = this.ethcontractService.checkValidAccount(this.activeAccount);
+    if(!status){
+        alert('Not a valid account');
+        this.activeAccount='';
+        return;
+      }
+      this.router.navigate(['/dashboard']);
+ // });
+}
 }

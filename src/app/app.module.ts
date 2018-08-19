@@ -32,6 +32,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonService } from './shared/common.service';
 import { EthcontractService } from './shared/ethContract.service';
 import { StoreownerdetailsComponent } from './dashboard/storeowner/storeownerdetails/storeownerdetails.component';
+import { AdminComponent } from './dashboard/admin/admin.component';
+import { AddproductComponent } from './dashboard/product/addproduct/addproduct.component';
+import { AddstoreComponent } from './dashboard/store/addstore/addstore.component';
+import { AddstoreownerComponent } from './dashboard/storeowner/addstoreowner/addstoreowner.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +47,11 @@ import { StoreownerdetailsComponent } from './dashboard/storeowner/storeownerdet
     StoreownerComponent,
     StoredetailsComponent,
     ProductdetailsComponent,
-    StoreownerdetailsComponent
+    StoreownerdetailsComponent,
+    AdminComponent,
+    AddproductComponent,
+    AddstoreComponent,
+    AddstoreownerComponent
   ],
   imports: [
     BrowserAnimationsModule,

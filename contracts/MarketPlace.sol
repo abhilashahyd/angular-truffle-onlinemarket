@@ -37,6 +37,8 @@ contract MarketPlace {
       address storeAddress
     );
 
+    event AccessingStore(Store currentStore);
+
     /**
      * Only SuperAdmin shall be able to create an Admin user
     */
@@ -75,16 +77,21 @@ contract MarketPlace {
     }
 
     /**
-    * This function verifies if an address has an admin access or not.
+    * This function verifies if an address has the following accesses or not
+    * - Super Admin
+    * - Admins
+    * - Store Owner
     */
-    function checkAdmingAccess(address addressToVerify) view public returns(bool) {
-      for (uint index = 0; index <adminUsers.length; index++) {
-        if (adminUsers[index] == addressToVerify) {
-          return true;
-        }
+    function checkAccess(address addressToVerify) view public returns(bool, bool, bool) {
+      bool isAdmin = Utils.existInTheArray(adminUsers, addressToVerify);
+      bool isStoreOwner = Utils.existInTheArray(storeOwners, addressToVerify);
+      bool isSuperAdmin = false;
+
+      if ( addressToVerify == superAdmin ) {
+        isSuperAdmin = true;
       }
 
-      return false;
+      return (isSuperAdmin, isAdmin, isStoreOwner);
     }
 
     /**
@@ -121,7 +128,7 @@ contract MarketPlace {
           storeFrontMap[msg.sender].length = storeCount + 1;
         }
 
-        storeFrontMap[msg.sender][storeCount] = address(new Store( storeName, storeDescription, nextStoreId ));
+        storeFrontMap[msg.sender][storeCount] = address(new Store( storeName, storeDescription, nextStoreId, msg.sender ));
         nextStoreId++;
 
         emit NewStore(
@@ -138,7 +145,36 @@ contract MarketPlace {
      *
      */
     function getStores(address storeOwnerAddress) public view returns(address[]) {
-        return storeFrontMap[storeOwnerAddress];
+        if ( storeOwnerAddress != 0 ) {
+            return storeFrontMap[storeOwnerAddress];
+        }
+        else {
+            //
+            // The caller is looking for all the stores in the market place
+            //
+            uint totalStoreCount = 0;
+            uint storeOwnersCount;
+
+            for (storeOwnersCount = 0; storeOwnersCount < storeOwners.length; storeOwnersCount++) {
+                totalStoreCount += storeFrontMap[storeOwners[storeOwnersCount]].length;
+            }
+
+            address[] memory allStores = new address[](totalStoreCount);
+            uint tempStoreCount = 0;
+
+            for ( storeOwnersCount = 0; storeOwnersCount < storeOwners.length; storeOwnersCount++ ) {
+                address[] memory storesOfOwner = storeFrontMap[storeOwners[storeOwnersCount]];
+
+                for ( uint storeFrontCountOfOwner = 0;
+                      storeFrontCountOfOwner < storesOfOwner.length;
+                      storeFrontCountOfOwner++) {
+                  allStores[tempStoreCount] = storesOfOwner[storeFrontCountOfOwner];
+                  tempStoreCount++;
+                }
+            }
+
+            return allStores;
+        }
     }
 
 

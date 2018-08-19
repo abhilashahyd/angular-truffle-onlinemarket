@@ -9,5 +9,8 @@ export class AppRoutes {
   static readonly ProductDetails = 'products/productdetails';
   static readonly StoreOwner = 'storeowner';
   static readonly StoreOwnerDetails = 'storeowner/storeownerdetails';
+  static readonly AddStoreOwner = 'storeowner/addstoreowner';
+  static readonly AddStore = 'stores/addstore';
+  static readonly AddProduct = 'products/addproduct';
   static readonly Products = 'products';
 }

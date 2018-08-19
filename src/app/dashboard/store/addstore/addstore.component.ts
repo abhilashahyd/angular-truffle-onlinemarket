@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {EthcontractService} from './../../../shared/ethContract.service'
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
 @Component({
-  selector: 'app-storedetails',
-  templateUrl: './storedetails.component.html',
-  styleUrls: ['./storedetails.component.css']
+  selector: 'app-addstore',
+  templateUrl: './addstore.component.html',
+  styleUrls: ['./addstore.component.css']
 })
-export class StoredetailsComponent implements OnInit {
+export class AddstoreComponent implements OnInit {
   store: any;
-  staddress='';
    constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService) {
    this.store={name:'', description:''};
   }
@@ -20,12 +18,12 @@ export class StoredetailsComponent implements OnInit {
     this.ethcontractService.createStoreFront(this.store.name, this.store.description).then(function(status){
      console.log(status);
    // that.balance = acctInfo.balance;
- }).catch(function(error){
+  }).catch(function(error){
    console.log(error);
- });
- this.router.navigate(['/dashboard/store']);
+  });
+  this.router.navigate(['/dashboard/stores']);
   }
-Reset(){
+  Reset(){
   this.store={name:'', description:''};
-}
-}
+  }
+  }

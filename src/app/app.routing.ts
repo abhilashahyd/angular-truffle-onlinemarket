@@ -11,7 +11,10 @@ import{DashboardComponent} from './dashboard/dashboard.component';
 import { AppRoutes } from './app-routes.enum';
 import { SignupComponent } from './signup/signup.component';
 import { StoreownerdetailsComponent } from './dashboard/storeowner/storeownerdetails/storeownerdetails.component';
-
+import { AdminComponent } from './dashboard/admin/admin.component';
+import { AddproductComponent } from './dashboard/product/addproduct/addproduct.component';
+import { AddstoreComponent } from './dashboard/store/addstore/addstore.component';
+import { AddstoreownerComponent } from './dashboard/storeowner/addstoreowner/addstoreowner.component';
 const routes: Routes = [
   {
     path: AppRoutes.Base,
@@ -26,7 +29,7 @@ const routes: Routes = [
       {
         path: AppRoutes.Base,
         pathMatch: 'full',
-        redirectTo: AppRoutes.Products
+        redirectTo: AppRoutes.Stores
       },
       {
       path: AppRoutes.Products,
@@ -48,6 +51,22 @@ const routes: Routes = [
     }, {
       path: AppRoutes.StoreOwnerDetails,
       component: StoreownerdetailsComponent
+    },
+    {
+     path: AppRoutes.AddStoreOwner ,
+     component: AddstoreownerComponent
+   },
+   {
+    path: AppRoutes.AddStore,
+    component: AddstoreComponent
+  },
+  {
+   path: AppRoutes.AddProduct,
+   component: AddproductComponent
+ },
+    {
+      path: AppRoutes.Admin,
+      component: AdminComponent
     }
   ]
   },
