@@ -18,6 +18,8 @@ export class EthcontractService {
   private activeAccount:any;
   // private accessType : string;
   private accessTypes : any[] =[];
+  private myContract: any;
+  private Store : any;
 
   constructor() {
     // if (typeof window.web3 !== 'undefined') {
@@ -29,7 +31,20 @@ export class EthcontractService {
     window.web3 = new Web3(this.web3Provider);
     this.accounts=window.web3.eth.accounts;
     console.log(this.accounts);
+    let   MarketPlace  = TruffleContract(tokenAbi);
+    let that=this;
+    MarketPlace.setProvider(this.web3Provider);
+    MarketPlace.deployed().then(function(instance) {
+    that.myContract = instance;
+  });
 
+    this.Store  = TruffleContract(storeAbi);
+  //   let that=this;
+  //   Store.setProvider(this.web3Provider);
+  //   Store.deployed().then(function(instance) {
+  //   that.myContract = instance;
+  //
+  // });
   }
 
   checkValidAccount(account){
@@ -42,243 +57,91 @@ export class EthcontractService {
     return true;
   }
 
-  checkAccess(){
-    // if (this.accessType ==undefined){
-      // let accessFlags = await myContract.checkAccess(accounts[0]);
-
-      var stContract = TruffleContract(tokenAbi);
-      stContract.setProvider(this.web3Provider);
-    let act = this.activeAccount;
-      console.log(this.activeAccount);
-      return new Promise((resolve, reject) => {
-    stContract.deployed().then(async function(instance) {
-      console.log('in check access');
-
-      console.log(act);
-      var  access =await instance.checkAccess(act);
-        // return access;
-        console.log(access);
-      // this.accessType= access;
-      return resolve(access);
-    });
-  });
-  // }
-
+  async checkAccess(){
+  const  accessFlags = await this.myContract.checkAccess(this.activeAccount);
+  return accessFlags;
 }
 
-checkAllAccess(){
-    var stContract = TruffleContract(tokenAbi);
-    stContract.setProvider(this.web3Provider);
-    var that=this;
-   return new Promise((resolve, reject) => {
-  stContract.deployed().then(function(instance) {
-    that.accounts.forEach(async function(act){
-      console.log(act);
-       var accType =await instance.checkAccess(act);
-      that.accessTypes.push({account: act, access: accType});
-    });
-    console.log(that.accessTypes);
-     return resolve(that.accessTypes);
-  });
-});
-}
-// return this.accessType;
-// }
-  addStoreOwnerDetails(stOwneraddress) {
+  async addStoreOwnerDetails(stOwneraddress) {
    console.log('Adding store owner');
-   // let that = this;
-     var stContract = TruffleContract(tokenAbi);
-  stContract.setProvider(this.web3Provider);
- var activeAct= this.activeAccount;
-   return new Promise((resolve, reject) => {
-     stContract.deployed().then(function(instance) {
-         return instance.createStoreOwner(stOwneraddress, { from : activeAct}).then(function(status) {
-         if(status!= undefined) {
-           console.log("Inside");
-           console.log(status);
-           return resolve({status:true});
-         }
-       }).catch(function(error){
-         console.log(error);
+  let storeOwners = await this.myContract.createStoreOwner(stOwneraddress, { from : this.activeAccount});
+  return storeOwners;
 
-         return reject("Error in createStoreOwner service call");
-       });
-   });
- });
 }
 
-getAdminUsers() {
+async getAdminUsers() {
+ console.log('Getting adminUsers');
+ let adminUsers = await this.myContract.getAdminUsers();
+ return adminUsers;
+}
+
+async getStoreOwners() {
  console.log('Getting store owner');
- // let that = this;
-   var stContract = TruffleContract(tokenAbi);
-stContract.setProvider(this.web3Provider);
-
- return new Promise((resolve, reject) => {
-   stContract.deployed().then(function(instance) {
-     console.log(instance);
-       return instance.getAdminUsers().then(function(admins) {
-       if(admins!= undefined) {
-         console.log("Inside");
-         console.log(admins);
-         return resolve(admins);
-       }
-     }).catch(function(error){
-       console.log(error);
-
-       return reject("Error in getAdminUsers service call");
-     });
- });
-});
+let storeOwners = await this.myContract.getStoreOwners();
+return storeOwners;
 }
 
-getStoreOwners() {
- console.log('Getting store owner');
- // let that = this;
-   var stContract = TruffleContract(tokenAbi);
-stContract.setProvider(this.web3Provider);
-
- return new Promise((resolve, reject) => {
-   stContract.deployed().then(function(instance) {
-     console.log(instance);
-       return instance.getStoreOwners().then(function(storeowners) {
-       if(status!= undefined) {
-         console.log("Inside");
-         console.log(storeowners);
-         return resolve(storeowners);
-       }
-     }).catch(function(error){
-       console.log(error);
-
-       return reject("Error in getStoreOwners service call");
-     });
- });
-});
-}
-
-createAdminUser(addressUser){
+async createAdminUser(addressUser){
   console.log('Create admin');
-  // let that = this;
-    var stContract = TruffleContract(tokenAbi);
- stContract.setProvider(this.web3Provider);
- var activeAct= this.activeAccount;
-
-  return new Promise((resolve, reject) => {
-    stContract.deployed().then(function(instance) {
-        return instance.createAdminUser(addressUser, { from : activeAct}).then(function(status) {
-          console.log("Inside createAdminUser1");
-          console.log(status);
-        if(status!= undefined) {
-          console.log("Inside createAdminUser");
-          console.log(status);
-          return resolve({status:true});
-        }
-      }).catch(function(error){
-        console.log(error);
-
-        return reject("Error in createAdminUser service call");
-      });
-  });
- });
-
+  let storeOwners = await this.myContract.createAdminUser(addressUser, { from : this.activeAccount});
+  return storeOwners;
 }
-getStores(storeOwner) {
+
+async getStores(storeOwner) {
  console.log('Getting stores');
- // let that = this;
-   var stContract = TruffleContract(tokenAbi);
-stContract.setProvider(this.web3Provider);
-var activeAct;
-if(storeOwner==undefined)
-activeAct= this.activeAccount;
-else
-activeAct= storeOwner;
- return new Promise((resolve, reject) => {
-   stContract.deployed().then(function(instance) {
-       return instance.getStores(activeAct).then(function(stores) {
-       if(stores!= undefined) {
-         console.log("Inside");
-         console.log(stores);
-         return resolve(stores);
-       }
-     }).catch(function(error){
-       console.log(error);
 
-       return reject("Error in createStoreOwner service call");
-     });
- });
-});
-}
-createStoreFront(storename,description) {
- console.log('Create store front');
- // let that = this;
-   var stContract = TruffleContract(tokenAbi);
-stContract.setProvider(this.web3Provider);
-var activeAct= this.activeAccount;
-console.log(activeAct);
- return new Promise((resolve, reject) => {
-   stContract.deployed().then(function(instance) {
-       return instance.createStoreFront(storename,description, { from : activeAct}).then(function(status) {
-   console.log("Inside1");
-         console.log(status);
-       if(status!= undefined) {
-         console.log("Inside2");
-         console.log(status);
-         return resolve({status:true});
-       }
-     }).catch(function(error){
-       console.log(error);
+ let storeOwners = await this.myContract.getStores(this.activeAccount);
+ return storeOwners;
 
-       return reject("Error in createStoreOwner service call");
-     });
- });
-});
 }
 
-checkAdmingAccess(addressUser){
+async createStoreFront(storename,description){
+  console.log('Create new store front');
+ let storeCreated = await this.myContract.createStoreFront(storename, description, {from:this.activeAccount});
+      return storeCreated;
+   }
+
+async checkAdmingAccess(addressUser){
   console.log('Check admin');
-  // let that = this;
-    var stContract = TruffleContract(tokenAbi);
- stContract.setProvider(this.web3Provider);
-
-  return new Promise((resolve, reject) => {
-    stContract.deployed().then(function(instance) {
-        return instance.checkAdmingAccess(addressUser).then(function(status) {
-          console.log(status);
-        if(status != undefined) {
-          console.log("Inside checkAdmingAccess");
-          console.log(status);
-          return resolve(status);
-        }
-      }).catch(function(error){
-        console.log(error);
-
-        return reject("Error in createStoreOwner service call");
-      });
-  });
- });
-
+  let chkAdmin = await this.myContract.checkAdmingAccess(addressUser);
+       return chkAdmin;
 }
 
-// getProducts(store) {
-//  console.log('Getting Products');
-//  // let that = this;
-//    var stContract = TruffleContract(tokenAbi);
-// stContract.setProvider(this.web3Provider);
-//  currentStore = Store.at(store);
-//  return new Promise((resolve, reject) => {
-//    stContract.deployed().then(function(instance) {
-//        return currentStore.getProducts(false).then(function(products) {
-//        if(products!= undefined) {
-//          console.log("Inside");
-//          console.log(products);
-//          return resolve(products);
-//        }
-//      }).catch(function(error){
-//        console.log(error);
-//
-//        return reject("Error in getProducts service call");
-//      });
-//  });
-// });
-// }
+
+async getStoreDetails(store) {
+ console.log('Getting store details');
+ const currentStore = this.Store.at(store);
+ let storedetails = await currentStore.getStoreDetails();
+ return storedetails;
+}
+
+async addProductToTheStore(store, productName,description,price, quantity){
+  console.log('Adding product to store');
+  const currentStore = this.Store.at(store);
+  let productdetails = await currentStore.addProductToTheStore( productName,description,price, quantity,{from:this.activeAccount});
+  return productdetails;
+}
+
+async getProductsInStore(store) {
+ console.log('Getting products in store');
+ const currentStore = this.Store.at(store);
+ let productDetails : any[];
+ let productIds = await currentStore.getProducts(false);
+ productIds.forEach(async function(currentProductId){
+   console.log(currentProductId);
+    var productdetail =await this.currentStore.getProductDetails(currentProductId);
+   productDetails.push({productId: currentProductId, productdetail: productdetail});
+ });
+ console.log(productDetails);
+   return productDetails;
+}
+
+
+async getStoreBalance(store) {
+ console.log('Getting store balance');
+ const currentStore = this.Store.at(store);
+ let storeBalance = await currentStore.getBalanceOfStore();
+ return storeBalance;
+}
 
 }

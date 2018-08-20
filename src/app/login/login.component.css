@@ -18,7 +18,7 @@ text-align: center;
 .form-paragraph
 {
 	 text-align: center;
-    font-size: 14px;
+    font-size: 20px;
     color: #A1A1A1;
     margin-bottom: 35px;
 }
@@ -34,12 +34,9 @@ text-align: center;
   text-align: center;
 }
 
-
-/* .loginform-container{
-    height: 398px;
-    width: 808px;
-    padding:20px 35px;
-} */
+.mat-input-wrapper{
+  width:400px !important;
+}
 
 
 .camp-signin{
