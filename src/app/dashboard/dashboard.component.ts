@@ -16,6 +16,7 @@ isStoreOwner: boolean;
   constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService) { }
 
   ngOnInit() {
+      console.log('In dashboard');
     this.ethcontractService.checkAccess().then(accessType=>{
       this.accessType= accessType;
       console.log(this.accessType);

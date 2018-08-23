@@ -1,7 +1,10 @@
 <h3 class="header"> Store Details</h3>
 <div  fxLayout="column">
 <div  fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" >
-<mat-form-field>
+
+
+
+<!-- <mat-form-field>
    <input matInput placeholder="Store Name" [(ngModel)]="store.name">
  </mat-form-field>
  <mat-form-field>
@@ -11,9 +14,14 @@
 <div >
  <mat-form-field>
    <textarea matInput placeholder="Description" [(ngModel)]="store.description"></textarea>
- </mat-form-field>
-
-<app-product></app-product>
+ </mat-form-field> -->
+ <div *ngIf="store">
+ <mat-card-title>  Store Name : {{store.storedetail[1]}} - {{store.storeAddr}}</mat-card-title><br>
+ <mat-card-content>Description : {{store.storedetail[3]}}
+ <span>Store Owner : {{store.storedetail[0]}}</span>
+ </mat-card-content>
+</div>
+<app-product [store]="store.storeAddr"></app-product>
 <!-- <button class="ui-button-primary" (click)="onSave()" mat-raised-button >Save</button>
   <button class="ui-button-info" (click)="Reset()" mat-raised-button >Reset</button> -->
 </div>

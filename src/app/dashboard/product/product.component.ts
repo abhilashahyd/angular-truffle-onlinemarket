@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Product } from '../../shared/product.interface';
-import { CommonService } from '../../shared/common.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import {EthcontractService} from './../../shared/ethContract.service';
 
 @Component({
   selector: 'app-product',
@@ -9,19 +9,41 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-products: Product[];
-  constructor(private route: ActivatedRoute, private router: Router, private commonService : CommonService){}
+products: any[];
+accessType : any;
+@Input() store : any;
+  constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService){}
 
   ngOnInit() {
-    this.commonService.getProducts().subscribe(products=>{
-      this.products= products.products;
-    });
+
+    this.ethcontractService.checkAccess().then(accessType=>{
+      this.accessType= accessType[2];
+      console.log(this.accessType);
+      });
+
+
+    this.ethcontractService.getProductsInStore(this.store).then((products)=>{
+   this.products = products;
+   console.log(products);
+   // that.balance = acctInfo.balance;
+ }).catch((error)=>{
+   console.log(error);
+ });
+
+
+
   }
 
   addProduct(){
-     this.router.navigate(['/dashboard/products/productdetails']);
+     this.router.navigate(['/dashboard/products/addproduct',{store:this.store}]);
   }
  show(rindex){
+   if(this.accessType){
    this.router.navigate(['/dashboard/products/productdetails',{id:rindex}]);
+ }
+ }
+
+ buyItem(){
+  console.log('Buying');
  }
 }

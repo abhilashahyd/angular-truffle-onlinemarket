@@ -20,13 +20,14 @@ export class EthcontractService {
   private accessTypes : any[] =[];
   private myContract: any;
   private Store : any;
+  private storeDetails : any[]=[];
 
   constructor() {
-    // if (typeof window.web3 !== 'undefined') {
-    //   this.web3Provider = window.web3.currentProvider;
-    // } else {
+    if (typeof window.web3 !== 'undefined') {
+      this.web3Provider = window.web3.currentProvider;
+    } else {
       this.web3Provider = new Web3.providers.HttpProvider('http://127.0.0.1:8545');
-    // }
+    }
 
     window.web3 = new Web3(this.web3Provider);
     this.accounts=window.web3.eth.accounts;
@@ -37,14 +38,18 @@ export class EthcontractService {
     MarketPlace.deployed().then(function(instance) {
     that.myContract = instance;
   });
-
+// this.Store= storeAbi;
     this.Store  = TruffleContract(storeAbi);
   //   let that=this;
-  //   Store.setProvider(this.web3Provider);
+    this.Store.setProvider(this.web3Provider);
   //   Store.deployed().then(function(instance) {
   //   that.myContract = instance;
   //
   // });
+  }
+
+  setValidAccount(account){
+      this.activeAccount=account;
   }
 
   checkValidAccount(account){
@@ -58,8 +63,10 @@ export class EthcontractService {
   }
 
   async checkAccess(){
+    if(this.activeAccount !=undefined){
   const  accessFlags = await this.myContract.checkAccess(this.activeAccount);
   return accessFlags;
+}
 }
 
   async addStoreOwnerDetails(stOwneraddress) {
@@ -89,12 +96,39 @@ async createAdminUser(addressUser){
 
 async getStores(storeOwner) {
  console.log('Getting stores');
-
- let storeOwners = await this.myContract.getStores(this.activeAccount);
- return storeOwners;
+console.log(this.activeAccount);
+let stOwner:any;
+if(storeOwner==='*')
+stOwner='';//to get all stores
+else
+stOwner=this.activeAccount;
+console.log('storeowner');
+console.log(stOwner);
+ let stores = await this.myContract.getStores(stOwner);
+ console.log(stores);
+ console.log('Getting store details in store');
+ // let storeDetails : any[]=[];
+ let storeDetails :any[]=[];
+ let that=this;
+ stores.forEach(async function(currentstoreaddr){
+   console.log(currentstoreaddr);
+    const currentStore = that.Store.at(currentstoreaddr);
+    console.log(currentStore);
+    var storedetail =await currentStore.getStoreDetails();
+    console.log(storedetail);
+   storeDetails.push({storeAddr: currentstoreaddr, storedetail: storedetail});
+ });
+ this.storeDetails=storeDetails;
+ console.log(this.storeDetails);
+   return this.storeDetails;
+  // return stores;
 
 }
 
+getStoreDetailId(index){
+if(this !=undefined)
+  return this.storeDetails[index];
+}
 async createStoreFront(storename,description){
   console.log('Create new store front');
  let storeCreated = await this.myContract.createStoreFront(storename, description, {from:this.activeAccount});
@@ -125,13 +159,17 @@ async addProductToTheStore(store, productName,description,price, quantity){
 async getProductsInStore(store) {
  console.log('Getting products in store');
  const currentStore = this.Store.at(store);
- let productDetails : any[];
+ let productDetails : any[]=[];
  let productIds = await currentStore.getProducts(false);
+ if(productIds !=undefined){
  productIds.forEach(async function(currentProductId){
    console.log(currentProductId);
-    var productdetail =await this.currentStore.getProductDetails(currentProductId);
+    var productdetail =await currentStore.getProductDetails(currentProductId);
+    if(productdetail!=undefined){
    productDetails.push({productId: currentProductId, productdetail: productdetail});
+ }
  });
+}
  console.log(productDetails);
    return productDetails;
 }

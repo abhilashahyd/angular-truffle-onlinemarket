@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
-import {MetaModule} from './meta/meta.module';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -16,7 +15,8 @@ import {
   MatMenuModule,
   MatSelectModule,
   MatCheckboxModule,
-  MatDialogModule
+  MatDialogModule,
+  MatIconModule
 } from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
@@ -40,6 +40,7 @@ import { AddproductComponent } from './dashboard/product/addproduct/addproduct.c
 import { AddstoreComponent } from './dashboard/store/addstore/addstore.component';
 import { AddstoreownerComponent } from './dashboard/storeowner/addstoreowner/addstoreowner.component';
 import { AddadminComponent } from './dashboard/admin/addadmin/addadmin.component';
+import { AllstoresComponent } from './dashboard/allstores/allstores.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +57,8 @@ import { AddadminComponent } from './dashboard/admin/addadmin/addadmin.component
     AddproductComponent,
     AddstoreComponent,
     AddstoreownerComponent,
-    AddadminComponent
+    AddadminComponent,
+    AllstoresComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -71,12 +73,12 @@ import { AddadminComponent } from './dashboard/admin/addadmin/addadmin.component
     BrowserModule,
     FormsModule,
     HttpModule,
-    MetaModule,
     MatCheckboxModule,
     AppRoutingModule,
     MatMenuModule,
     FlexLayoutModule,
     MatSelectModule,
+    MatIconModule,
     MatDialogModule//, MatDialogRef, MAT_DIALOG_DATA
   ],
    entryComponents: [AddadminComponent, AdminComponent],

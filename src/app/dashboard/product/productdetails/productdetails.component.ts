@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
+import {EthcontractService} from './../../../shared/ethContract.service';
 @Component({
   selector: 'app-productdetails',
   templateUrl: './productdetails.component.html',
@@ -9,7 +9,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class ProductdetailsComponent implements OnInit {
   stOwner: any;
   productid : number;
-   constructor(private route: ActivatedRoute, private router: Router){
+   constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService){
    this.stOwner={name:''};
   }
 

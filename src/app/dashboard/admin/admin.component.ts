@@ -17,7 +17,7 @@ constructor(private route: ActivatedRoute, private router: Router, private ethco
   ngOnInit() {
     this.ethcontractService.getAdminUsers().then(admins=>{
       console.log(admins);
-      this.admins= [admins];
+      this.admins= admins;
     });
   }
 
@@ -40,6 +40,7 @@ constructor(private route: ActivatedRoute, private router: Router, private ethco
 
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
+        if(result!= undefined){
         this.account = result;
         this.ethcontractService.createAdminUser(result).then(status=>{
           console.log(status);
@@ -47,6 +48,7 @@ constructor(private route: ActivatedRoute, private router: Router, private ethco
           // this.accessAccounts[index].access[1]=true;
           // this.accessAccounts= access;
         });
+      }
 
       });
     }

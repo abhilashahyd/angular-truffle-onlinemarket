@@ -10,6 +10,6 @@ module.exports = function(deployer) {
   // deployer.deploy(MetaCoin);
   deployer.deploy(Utils);
   deployer.deploy(Store, "SuperAdmin Store", "This shall never be used by anyone!", 0, "");
-    deployer.link(Utils, MarketPlace);
+  deployer.link(Utils, MarketPlace);
   deployer.deploy(MarketPlace);
 };

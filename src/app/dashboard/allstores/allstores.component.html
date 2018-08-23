@@ -1,8 +1,5 @@
 <div fxLayout="column" fxLayoutGap="10px">
-  <div fxFlex="10">
-      <button (click)="addStore()" mat-raised-button class="addbutton">Add Store</button>
-  </div>
-  <div fxFlex="90">
+<div fxFlex="90">
 <div  fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" >
 <div  *ngFor="let store of stores;let i='index' "  (click)="show(i)" >
 <div [ngClass]="['pro']" >

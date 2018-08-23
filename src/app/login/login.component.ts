@@ -21,12 +21,12 @@ accessType : string;
 
  signin(){
     console.log(this.activeAccount);
-    var status = this.ethcontractService.checkValidAccount(this.activeAccount);
-    if(!status){
-        alert('Not a valid account');
-        this.activeAccount='';
-        return;
-      }
+    var status = this.ethcontractService.setValidAccount(this.activeAccount);
+    // if(!status){
+    //     alert('Not a valid account');
+    //     this.activeAccount='';
+    //     return;
+    //   }
       this.router.navigate(['/dashboard']);
  // });
 }

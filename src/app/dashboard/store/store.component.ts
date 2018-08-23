@@ -22,7 +22,7 @@ export class StoreComponent implements OnInit {
         this.isOwner=true;
       }
       this.ethcontractService.getStores(this.storeOwner).then((stores)=>{
-     this.stores = [stores];
+     this.stores = stores;
      console.log(stores);
      // that.balance = acctInfo.balance;
    }).catch((error)=>{

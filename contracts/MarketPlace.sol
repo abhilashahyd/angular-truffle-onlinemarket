@@ -136,6 +136,7 @@ contract MarketPlace {
         }
 
         storeFrontMap[msg.sender][storeCount] = address(new Store( storeName, storeDescription, nextStoreId, msg.sender ));
+
         nextStoreId++;
 
         emit NewStore(

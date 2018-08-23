@@ -11,10 +11,17 @@ export class StoredetailsComponent implements OnInit {
   store: any;
   staddress='';
    constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService) {
-   this.store={name:'', description:''};
+   // this.store={name:'', description:''};
   }
 
    ngOnInit() {
+     this.route.params.subscribe((params: Params) => {
+       console.log(params);
+     const rindex= params['id'];
+     this.store = this.ethcontractService.getStoreDetailId(rindex);
+     console.log(this.store);
+     });
+
    }
   onSave(){
     this.ethcontractService.createStoreFront(this.store.name, this.store.description).then(function(status){

@@ -1,14 +1,15 @@
 <div fxLayout="column" fxLayoutGap="10px">
-  <div  fxFlex="10">
+  <div *ngIf="accessType" fxFlex="10">
       <button (click)="addProduct()" mat-raised-button class="addbutton">Add Product</button>
   </div>
   <div fxFlex="90">
 <div  fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" >
 <div  *ngFor="let product of products;let i='index' "  (click)="show(i)" >
 <div [ngClass]="['pro']" >
-<span class="pro-header">{{product.productName}}</span>
-<p>{{product.description}}</p>
-<span>{{product.dateOfManufacture}}:{{product.dateOfExpiry}}</span>
+<span class="pro-header">{{product.productdetail[0]}}</span>
+<p>{{product.productdetail[1]}}</p>
+<span>{{product.productdetail[2]}}:{{product.productdetail[3]}}</span>
+<mat-icon *ngIf="!accessType" class="icon" (click)="buyItem()">shopping_cart</mat-icon>
 </div>
 <!-- <mat-card>
 <mat-card-title>{{product.productName}}</mat-card-title>

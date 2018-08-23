@@ -15,6 +15,9 @@ export class AddstoreComponent implements OnInit {
    ngOnInit() {
    }
   onSave(){
+    console.log('in save');
+    console.log(this.store.name);
+    console.log(this.store.description);
     this.ethcontractService.createStoreFront(this.store.name, this.store.description).then(function(status){
      console.log(status);
    // that.balance = acctInfo.balance;

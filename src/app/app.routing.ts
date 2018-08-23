@@ -15,6 +15,8 @@ import { AdminComponent } from './dashboard/admin/admin.component';
 import { AddproductComponent } from './dashboard/product/addproduct/addproduct.component';
 import { AddstoreComponent } from './dashboard/store/addstore/addstore.component';
 import { AddstoreownerComponent } from './dashboard/storeowner/addstoreowner/addstoreowner.component';
+import { AllstoresComponent } from './dashboard/allstores/allstores.component';
+
 const routes: Routes = [
   {
     path: AppRoutes.Base,
@@ -29,7 +31,7 @@ const routes: Routes = [
       {
         path: AppRoutes.Base,
         pathMatch: 'full',
-        redirectTo: AppRoutes.Stores
+        redirectTo: AppRoutes.AllStores
       },
       {
       path: AppRoutes.Products,
@@ -42,7 +44,11 @@ const routes: Routes = [
  {
       path: AppRoutes.Stores,
       component: StoreComponent
-    }, {
+    },
+    {
+         path: AppRoutes.AllStores,
+         component: AllstoresComponent
+       }, {
       path: AppRoutes.StoreDetails,
       component: StoredetailsComponent
     }, {
