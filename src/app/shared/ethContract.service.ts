@@ -52,6 +52,11 @@ export class EthcontractService {
       this.activeAccount=account;
   }
 
+  getValidAccount(){
+    if(this.activeAccount ===undefined)
+    this.activeAccount= this.accounts[0];
+      return this.activeAccount;
+  }
   checkValidAccount(account){
   const matchAct =  _.find(this.accounts,(acct) => acct == account);
   console.log(matchAct);
@@ -180,6 +185,24 @@ async getStoreBalance(store) {
  const currentStore = this.Store.at(store);
  let storeBalance = await currentStore.getBalanceOfStore();
  return storeBalance;
+}
+
+async buyProduct(store, currentProductId, quantity){
+  console.log('Buying product');
+  const currentStore = this.Store.at(store);
+let productDetails = await currentStore.getProductDetails(currentProductId);
+await currentStore.buyProductFromStore(currentProductId, quantity, {from:this.activeAccount});
+let updatedProductDetails = await currentStore.getProductDetails(currentProductId);
+return updatedProductDetails;
+}
+
+async updateProduct(store,currentProductId, productdetails){
+  console.log('Updating product');
+  const currentStore = this.Store.at(store);
+let productDetails = await currentStore.getProductDetails(currentProductId);
+await currentStore.updateProduct( currentProductId,  productDetails[0],  productDetails[1],  500000000000000,  600, {from:this.activeAccount});
+let updatedProductDetails = await currentStore.getProductDetails(currentProductId);
+return updatedProductDetails;
 }
 
 }

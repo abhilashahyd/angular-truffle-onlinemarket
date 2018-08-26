@@ -23,8 +23,13 @@ isStoreOwner: boolean;
       this.isSuperAdmin=this.accessType[0];
       this.isAdmin=this.accessType[1];
       this.isStoreOwner=this.accessType[2];
+        console.log(this.isSuperAdmin);
     });
 
+  }
+
+  logout(){
+    this.router.navigate(['/login']);
   }
 
 }

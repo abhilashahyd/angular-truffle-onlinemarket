@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Product } from '../../shared/product.interface';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {EthcontractService} from './../../shared/ethContract.service'
 
@@ -33,6 +32,6 @@ export class StoreComponent implements OnInit {
        this.router.navigate(['/dashboard/stores/addstore']);
     }
    show(rindex){
-     this.router.navigate(['/dashboard/stores/storedetails',{id:rindex}]);
+     this.router.navigate(['/dashboard/stores/storedetails',{id:rindex, p:0}]);
    }
 }

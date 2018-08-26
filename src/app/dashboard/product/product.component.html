@@ -1,15 +1,16 @@
 <div fxLayout="column" fxLayoutGap="10px">
-  <div *ngIf="accessType" fxFlex="10">
+  <div *ngIf="parent==0" fxFlex="20">
       <button (click)="addProduct()" mat-raised-button class="addbutton">Add Product</button>
   </div>
-  <div fxFlex="90">
+  <div fxFlex="80">
 <div  fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" >
-<div  *ngFor="let product of products;let i='index' "  (click)="show(i)" >
+<div  *ngFor="let product of products;let i='index' " >
 <div [ngClass]="['pro']" >
 <span class="pro-header">{{product.productdetail[0]}}</span>
 <p>{{product.productdetail[1]}}</p>
-<span>{{product.productdetail[2]}}:{{product.productdetail[3]}}</span>
-<mat-icon *ngIf="!accessType" class="icon" (click)="buyItem()">shopping_cart</mat-icon>
+<span>{{product.productdetail[2]}}  {{product.productdetail[3]}}</span>
+<mat-icon *ngIf="parent==1" class="icon" (click)="openDialog(i)">shopping_cart</mat-icon>
+<mat-icon *ngIf="parent==0" class="icon" (click)="editProduct(i)">edit</mat-icon>
 </div>
 <!-- <mat-card>
 <mat-card-title>{{product.productName}}</mat-card-title>

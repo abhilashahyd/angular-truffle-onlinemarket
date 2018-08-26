@@ -2,14 +2,15 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
-  selector: 'app-addstoreowner',
-  templateUrl: './addstoreowner.component.html',
-  styleUrls: ['./addstoreowner.component.css']
+  selector: 'app-buyproduct',
+  templateUrl: './buyproduct.component.html',
+  styleUrls: ['./buyproduct.component.css']
 })
-export class AddstoreownerComponent implements OnInit {
-  stOwner: any;
+export class BuyproductComponent implements OnInit {
+  quantity: number;
+  selectedProductId : any;
   constructor(
-      public dialogRef: MatDialogRef<AddstoreownerComponent>,
+      public dialogRef: MatDialogRef<BuyproductComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any) {}
 
     onNoClick(): void {

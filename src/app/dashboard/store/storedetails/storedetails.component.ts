@@ -10,6 +10,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class StoredetailsComponent implements OnInit {
   store: any;
   staddress='';
+  parent: number;
    constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService) {
    // this.store={name:'', description:''};
   }
@@ -18,6 +19,7 @@ export class StoredetailsComponent implements OnInit {
      this.route.params.subscribe((params: Params) => {
        console.log(params);
      const rindex= params['id'];
+     this.parent = params['p'];
      this.store = this.ethcontractService.getStoreDetailId(rindex);
      console.log(this.store);
      });

@@ -1,5 +1,7 @@
 pragma solidity ^0.4.22;
 
+import "./EIP20.sol";
+
 /**
  * This contract will create all the functionalities related to a store.
  *
@@ -10,17 +12,27 @@ pragma solidity ^0.4.22;
  * - store owner being able to see the stores
  * - customer being able to view the products in a given Store
  *
+ * BP2: Restricting Access:
+ *  - Restrict other contracts’ access to the state by making all the state variables private.
 */
 contract Store {
+    using SafeMath for uint256;
+
     // Onwer is the actual store owner who is creating the store.
     address private owner;
-
-    string public storeName;
-    string public description;
+    string private storeName;
+    string private description;
     uint private storeId;
     uint private productCount;
     uint private nextProductId;
-    Product[] public products;
+    Product[] private products;
+    EIP20 private eip20Token;
+
+    /**
+    * At some stage we can oraclize the token price. However, for now let's consider this
+    * for the sake of any calculation.
+    */
+    uint256 constant private tokenPriceInWei = 10000000000000;
 
     enum ProductStatus {
         ACTIVE,
@@ -34,6 +46,7 @@ contract Store {
         uint price;
         uint quantity;
         ProductStatus status;
+        uint256 discountPercentage;
     }
 
     event NewProduct(
@@ -55,19 +68,28 @@ contract Store {
       );
 
     event LogAsEvent(address param1, address param2, string param3);
-
+    /**
+    * @dev Creates a Store Contract which holds the associated products and the balance corresponding to the
+    *      sales of such products.
+    * @param _storeName - the name of the stores
+    * @param _description - the description about the stores
+    * @param _storeId - the store id of the store, which will be unique across the market place
+    * @param _storeOwner - the actual owner of the store (will be an externally owned accounts)
+    */
     constructor(
             string _storeName,
             string _description,
             uint _storeId,
-            address storeOwner ) public {
+            address _storeOwner,
+            EIP20 _eip20Token ) public {
 
-        owner = storeOwner;
+        owner = _storeOwner;
         storeName = _storeName;
         storeId = _storeId;
         description = _description;
         productCount = 0;
         nextProductId = 1;
+        eip20Token = _eip20Token;
     }
 
     /**
@@ -86,6 +108,11 @@ contract Store {
 
     /**
     * A function to return the state details for a given store contract
+    * @return a list of values with the following details
+    *   - Owner Address
+    *   - Store name
+    *   - Store identifier
+    *   - Store description
     */
     function getStoreDetails() public view returns( address, string, uint, string ) {
       return (owner, storeName, storeId, description);
@@ -97,6 +124,9 @@ contract Store {
      * Whenever a new product is added, the product map will be updated to hold all the product and their details
      * across all the store and store owners.
      *
+     * TODO: Add expiry feature and use the Auto Deprecation pattern to expire a product. Also, implement the use case
+     *      that will prevent the shoppers from buying an expired product!
+     *
     */
     function addProductToTheStore(
             string productName,
@@ -104,14 +134,17 @@ contract Store {
             uint price,
             uint quantity ) public onlyOwner returns(uint) {
 
+            uint256 discountPercentage = 10;
             products.length += 1;
+
             products[productCount] = Product(
                 nextProductId,
                 productName,
                 productDesc,
                 price,
                 quantity,
-                ProductStatus.ACTIVE );
+                ProductStatus.ACTIVE,
+                discountPercentage );
 
             emit NewProduct(
               nextProductId,
@@ -134,6 +167,8 @@ contract Store {
      * - productName
      * - price
      * - description
+     *
+     * TODO : Add an additional parameter for discountPercentage
      *
     */
     function updateProduct(
@@ -226,14 +261,15 @@ contract Store {
     /*
     * For a given product identifier of the store, this method will return the product details.
     */
-    function getProductDetails(uint _productId) public view returns(string, string, uint, uint, ProductStatus) {
+    function getProductDetails(uint _productId) public view returns(string, string, uint, uint, ProductStatus, uint256 ) {
         uint productIndex = _productId - 1;
 
         return ( products[productIndex].productName,
                  products[productIndex].description,
                  products[productIndex].price,
                  products[productIndex].quantity,
-                 products[productIndex].status );
+                 products[productIndex].status,
+                 products[productIndex].discountPercentage );
     }
 
     /**
@@ -250,24 +286,57 @@ contract Store {
         require( owner != msg.sender, "The owner cannot buy its own product!");
         require( _quantity <= products[productIndex].quantity, "The store does not have sufficient quantity of the product");
         require( msg.value <= msg.sender.balance, "The buyer does not have sufficient balance in his / her account!");
-        require( msg.value == weiToTransfer, "The supplied value is lesser than the actual price of the items!");
+        // require( msg.value == weiToTransfer, "The supplied value is lesser than the actual price of the items!");
 
         //Reduce the corresponding quantity from the inventory
         products[productIndex].quantity = products[productIndex].quantity - _quantity;
 
         emit PurchaseOfProduct(_productId, _quantity, address(this), owner, msg.sender, msg.sender.balance, weiToTransfer);
 
+        // Redeem tokens by transferring the equivalent amount of tokens to the store owners
+        uint256 discountValue = 0;
+
+        if (eip20Token.balanceOf(msg.sender) > 0) {
+          uint256 tokenValue = eip20Token.balanceOf(msg.sender) * tokenPriceInWei;
+
+          if ( tokenValue <= weiToTransfer ) {
+            // Transfer all the tokens of the shopper to the store owner and
+            // set the discounted value to be same as the token values
+            discountValue = tokenValue;
+            eip20Token.transferFrom( msg.sender, owner, eip20Token.balanceOf(msg.sender) );
+          } else {
+            discountValue = weiToTransfer;
+            eip20Token.transferFrom( msg.sender, owner, weiToTransfer.div(tokenPriceInWei) );
+          }
+        }
+
         // Transfer fund from the shopper's acount into the store's account
-        address myAddress = address(this);
-        myAddress.transfer( msg.value );
+        uint256 finalAmountToBePaid = weiToTransfer.sub(discountValue);
+        if ( finalAmountToBePaid > 0 ) {
+          address myAddress = address(this);
+        //  myAddress.transfer( finalAmountToBePaid );
+        }
+
+        // Transfer loyalty tokens to the shoppers
+        if ( products[productIndex].discountPercentage > 0 ) {
+          eip20Token.transferFrom( owner,
+                                   msg.sender,
+                                   (weiToTransfer * products[productIndex].discountPercentage) / (tokenPriceInWei * 100)
+                                 );
+        }
+
 
         return true;
     }
 
     /**
      * A store owner can withdraw fund from a given store
+     *
+     * BP1: Fail early and fail loud
+     *  - Fail early and fail loud pattern has been used to ensure that zero amount withdrwal doesn't take place.
     */
     function withdrawFund(uint withdrawAmount) public payable onlyOwner returns(bool) {
+        require(withdrawAmount > 0, "The withdrwal amount must be a positive number!");
         require(address(this).balance >= withdrawAmount, "The current store balance amount must be greater than the withdrawal amount!");
         owner.transfer(withdrawAmount);
 

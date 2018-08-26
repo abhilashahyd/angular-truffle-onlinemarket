@@ -8,13 +8,16 @@ import {EthcontractService} from './../../shared/ethContract.service'
   styleUrls: ['./allstores.component.css']
 })
 export class AllstoresComponent implements OnInit {
-
+    activeAccount : any;
     stores: any[];
       constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService){
             }
 
       ngOnInit() {
-              this.ethcontractService.getStores('*').then((stores)=>{
+        this.activeAccount = this.ethcontractService.getValidAccount();
+        console.log('active account');
+        console.log(this.activeAccount);
+        this.ethcontractService.getStores('*').then((stores)=>{
        this.stores = stores;
        console.log(stores);
        // that.balance = acctInfo.balance;
@@ -26,6 +29,6 @@ export class AllstoresComponent implements OnInit {
       //    this.router.navigate(['/dashboard/stores/addstore']);
       // }
      show(rindex){
-       this.router.navigate(['/dashboard/stores/storedetails',{id:rindex}]);
+       this.router.navigate(['/dashboard/stores/storedetails',{id:rindex, p:1}]);
      }
   }

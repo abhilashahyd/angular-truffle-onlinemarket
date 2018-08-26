@@ -32,7 +32,6 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { CommonService } from './shared/common.service';
 import { EthcontractService } from './shared/ethContract.service';
 import { StoreownerdetailsComponent } from './dashboard/storeowner/storeownerdetails/storeownerdetails.component';
 import { AdminComponent } from './dashboard/admin/admin.component';
@@ -41,6 +40,7 @@ import { AddstoreComponent } from './dashboard/store/addstore/addstore.component
 import { AddstoreownerComponent } from './dashboard/storeowner/addstoreowner/addstoreowner.component';
 import { AddadminComponent } from './dashboard/admin/addadmin/addadmin.component';
 import { AllstoresComponent } from './dashboard/allstores/allstores.component';
+import { BuyproductComponent } from './dashboard/product/buyproduct/buyproduct.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +58,8 @@ import { AllstoresComponent } from './dashboard/allstores/allstores.component';
     AddstoreComponent,
     AddstoreownerComponent,
     AddadminComponent,
-    AllstoresComponent
+    AllstoresComponent,
+    BuyproductComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -81,8 +82,8 @@ import { AllstoresComponent } from './dashboard/allstores/allstores.component';
     MatIconModule,
     MatDialogModule//, MatDialogRef, MAT_DIALOG_DATA
   ],
-   entryComponents: [AddadminComponent, AdminComponent],
-  providers: [CommonService, EthcontractService],
+   entryComponents: [AddadminComponent, AdminComponent, BuyproductComponent],
+  providers: [ EthcontractService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

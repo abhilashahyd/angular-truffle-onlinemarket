@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import {EthcontractService} from './../../../shared/ethContract.service';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+// import {EthcontractService} from './../../../shared/ethContract.service';
 @Component({
   selector: 'app-productdetails',
   templateUrl: './productdetails.component.html',
@@ -9,19 +10,20 @@ import {EthcontractService} from './../../../shared/ethContract.service';
 export class ProductdetailsComponent implements OnInit {
   stOwner: any;
   productid : number;
-   constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService){
-   this.stOwner={name:''};
-  }
+   constructor(  public dialogRef: MatDialogRef<ProductdetailsComponent>,
+     @Inject(MAT_DIALOG_DATA) public data: any){
+     }
 
    ngOnInit() {
-     this.route.params.subscribe((params: Params) => {
-     let id = parseInt(params['id']);
-     this.productid = id;
-     console.log(id);
-     });
+     console.log(this.data);
+     // this.route.params.subscribe((params: Params) => {
+     // let id = parseInt(params['id']);
+     // this.productid = id;
+     // console.log(id);
+     // });
    }
-  onSave(){
+   onNoClick(): void {
+     this.dialogRef.close();
+   }
 
   }
-
-}

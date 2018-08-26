@@ -1,5 +1,11 @@
 <div class="container">
-<mat-toolbar color="primary">Angular Truffle Box - Online Market</mat-toolbar>
+<div  fxLayout="row">
+<mat-toolbar fxFlex="98" color="primary">Angular Truffle Box - Online Market
+</mat-toolbar>
+<div class="icondiv">
+  <mat-icon class="icon" (click)="logout()">logout</mat-icon>
+</div>
+</div>
 <mat-sidenav-container >
   <mat-sidenav mode="side" opened class="sidebar">
     <button mat-button [matMenuTriggerFor]="menu">Dashboard</button>

@@ -21,20 +21,11 @@ constructor(private route: ActivatedRoute, private router: Router, private ethco
     });
   }
 
-  // setAdmin(account,index){
-  //   this.ethcontractService.createAdminUser(account).then(status=>{
-  //     console.log(status);
-  //     this.accessAccounts[index].access[1]=true;
-  //     // this.accessAccounts= access;
-  //   });
-
-
-  // }
 
 
   openDialog(): void {
       const dialogRef = this.dialog.open(AddadminComponent, {
-        width: '250px',
+        width: '450px',
         data: { account: this.account}
       });
 

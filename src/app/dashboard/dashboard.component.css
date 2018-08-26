@@ -17,3 +17,13 @@
 .container{
   height: 100%;
 }
+.icon{
+  /* display: block; */
+  /* padding-left:  100px; */
+  /* float : right !important; */
+  /* vertical-align: bottom; */
+  padding-top: 20px;
+}
+.icondiv{
+    background-color: primary;
+}

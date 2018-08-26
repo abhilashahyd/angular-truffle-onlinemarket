@@ -6,6 +6,8 @@ import {EthcontractService} from './../../shared/ethContract.service'
 import { Router, ActivatedRoute, Params } from '@angular/router';
 // declare let require: any;
 // const marketplace_artifacts = require('../../../../build/contracts/MarketPlace.json');
+import {AddstoreownerComponent} from './addstoreowner/addstoreowner.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-storeowner',
@@ -15,22 +17,40 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class StoreownerComponent implements OnInit {
   storeOwners: any[];
   MarketPlace : any;
-
-    constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService){
+  stOwner :any;
+    constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService, public dialog: MatDialog){
         // console.log('Constructor: ' + ethcontractService);
     }
 
     ngOnInit() {
       this.ethcontractService.getStoreOwners().then(stOwner=>{
         console.log(stOwner);
-        this.storeOwners = [stOwner];
+        this.storeOwners = stOwner;
       });
       }
 
 
     addStoreOwner(){
       // this.addStoreOwnerDetails('0x674967e937e03AE769Aeb84D0Eb46c892345d045');
-       this.router.navigate(['/dashboard/storeowner/addstoreowner']);
+       // this.router.navigate(['/dashboard/storeowner/addstoreowner']);
+       const dialogRef = this.dialog.open(AddstoreownerComponent, {
+         width: '450px',
+         data: { account: this.stOwner}
+       });
+
+       dialogRef.afterClosed().subscribe(result => {
+         console.log('The dialog was closed');
+         if(result!= undefined){
+         this.stOwner = result;
+         console.log('Adding new storeowner');
+         this.ethcontractService.addStoreOwnerDetails(this.stOwner).then(function(status){
+           this.storeOwners.push(this.stOwner);
+              console.log(status);
+      }).catch(function(error){
+        console.log(error);
+      });
+       }
+       });
     }
    show(rindex){
      this.router.navigate(['/dashboard/storeowner/storeownerdetails',{id:rindex}]);
