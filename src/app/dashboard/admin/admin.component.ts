@@ -10,7 +10,7 @@ import {AddadminComponent} from './addadmin/addadmin.component';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-admins : any[];
+admins : any[]=[];
 account : any;
 activeAccount : any;
 
@@ -22,10 +22,12 @@ constructor(private route: ActivatedRoute, private router: Router, private ethco
     if(this.activeAccount ==undefined){
        this.router.navigate(['/login']);
     }
+    else{
     this.ethcontractService.getAdminUsers().then(admins=>{
       console.log(admins);
       this.admins= admins;
     });
+  }
   }
 
 

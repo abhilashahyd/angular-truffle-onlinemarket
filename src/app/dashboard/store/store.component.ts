@@ -11,26 +11,25 @@ export class StoreComponent implements OnInit {
  @Input() storeOwner : any;
  @Input() isOwner : boolean;
 activeAccount: any;
-  stores: any[];
+  stores: any[]=[];
     constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService){
       this.isOwner =false;
     }
 
     ngOnInit() {
       this.activeAccount= this.ethcontractService.getValidAccount();
-      if(this.activeAccount ==undefined){
+      if(this.activeAccount ===undefined){
          this.router.navigate(['/login']);
       }
-      if(this.storeOwner){
-        this.isOwner=true;
-      }
-      this.ethcontractService.getStores(this.storeOwner).then((stores)=>{
-     this.stores = stores;
-     console.log(stores);
-     // that.balance = acctInfo.balance;
-   }).catch((error)=>{
-     console.log(error);
-   });
+      else{
+        this.ethcontractService.getStores(this.storeOwner).then((stores)=>{
+           this.stores = stores;
+           console.log(stores);
+           // that.balance = acctInfo.balance;
+         }).catch((error)=>{
+           console.log(error);
+         });
+       }
     }
     addStore(){
        this.router.navigate(['/dashboard/stores/addstore']);

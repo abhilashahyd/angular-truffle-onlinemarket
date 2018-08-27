@@ -15,7 +15,7 @@ import {MatDialog} from '@angular/material';
   styleUrls: ['./storeowner.component.css']
 })
 export class StoreownerComponent implements OnInit {
-  storeOwners: any[];
+  storeOwners: any[]=[];
   MarketPlace : any;
   stOwner :any;
   activeAccount: any;
@@ -27,12 +27,13 @@ export class StoreownerComponent implements OnInit {
       this.activeAccount= this.ethcontractService.getValidAccount();
       if(this.activeAccount ===undefined){
          this.router.navigate(['/login']);
-      }
+      }else{
       this.ethcontractService.getStoreOwners().then(stOwner=>{
         console.log(stOwner);
         this.storeOwners = stOwner;
       });
       }
+    }
 
 
     addStoreOwner(){

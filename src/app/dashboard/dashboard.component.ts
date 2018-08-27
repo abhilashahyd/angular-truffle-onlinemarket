@@ -20,10 +20,12 @@ isStoreOwner: boolean;
     this.ethcontractService.checkAccess().then(accessType=>{
       this.accessType= accessType;
       console.log(this.accessType);
+      if(this.accessType !==undefined){
       this.isSuperAdmin=this.accessType[0];
       this.isAdmin=this.accessType[1];
       this.isStoreOwner=this.accessType[2];
         console.log(this.isSuperAdmin);
+      }
     });
 
   }
