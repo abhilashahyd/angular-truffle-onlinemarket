@@ -29,10 +29,11 @@ export class StoredetailsComponent implements OnInit {
     this.ethcontractService.createStoreFront(this.store.name, this.store.description).then(function(status){
      console.log(status);
    // that.balance = acctInfo.balance;
+   this.router.navigate(['/dashboard/store']);
  }).catch(function(error){
    console.log(error);
  });
- this.router.navigate(['/dashboard/store']);
+
   }
 Reset(){
   this.store={name:'', description:''};

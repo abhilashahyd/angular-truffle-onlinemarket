@@ -11,9 +11,7 @@
     border:0px;
     margin:10px;
     background-color: #ffffff;
-    width: 100%;
-    /* width:180px; */
-    /* 90%; */
+    max-width: 380px;
     padding: 1em;
     /* margin-left:200px */
     margin-top: 0px;
