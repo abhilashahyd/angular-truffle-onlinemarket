@@ -16,7 +16,7 @@ accessType : any;
 selectedProductId : any;
 selectedProduct : any;
 quantity: any;
-
+activeAccount : any;
 @Input() store : any;
 @Input() parent : number;
   constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService, public dialog: MatDialog){}

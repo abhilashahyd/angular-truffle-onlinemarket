@@ -198,7 +198,7 @@ return updatedProductDetails;
 
 async updateProduct(store,currentProductId, productname, description, price, quantity){
   console.log('Updating product');
-  console.log(productDetails);
+  // console.log(productDetails);
   const currentStore = this.Store.at(store);
 let productDetails = await currentStore.getProductDetails(currentProductId);
 await currentStore.updateProduct( currentProductId,  productname,  description,  price,  quantity, {from:this.activeAccount});
