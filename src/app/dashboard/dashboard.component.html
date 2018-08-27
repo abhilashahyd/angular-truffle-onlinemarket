@@ -1,10 +1,11 @@
 <div class="container">
 <div  fxLayout="row">
-<mat-toolbar fxFlex="98" color="primary">Angular Truffle Box - Online Market
+<mat-toolbar color="primary">
+  <span>Angular Truffle Box - Online Market</span>
+  <!-- This fills the remaining space of the current row -->
+  <span class="example-fill-remaining-space"></span>
+  <span><mat-icon (click)="logout()">logout</mat-icon></span>
 </mat-toolbar>
-<div class="icondiv">
-  <mat-icon class="icon" (click)="logout()">logout</mat-icon>
-</div>
 </div>
 <mat-sidenav-container >
   <mat-sidenav mode="side" opened class="sidebar">

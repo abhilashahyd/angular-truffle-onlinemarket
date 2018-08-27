@@ -17,13 +17,8 @@
 .container{
   height: 100%;
 }
-.icon{
-  /* display: block; */
-  /* padding-left:  100px; */
-  /* float : right !important; */
-  /* vertical-align: bottom; */
-  padding-top: 20px;
-}
-.icondiv{
-    background-color: primary;
+.example-fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
 }
