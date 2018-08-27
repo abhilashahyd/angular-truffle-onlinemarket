@@ -1,4 +1,3 @@
-<!-- <form [formGroup]="loginForm"> -->
 <div class="loginform-container">
   	<h3 class="form-heading">Sign In</h3>
     <div class="form-paragraph">Welcome to Online Market Place</div>
@@ -6,11 +5,9 @@
   <mat-form-field>
     <input matInput placeholder="Account Number"  [(ngModel)]="activeAccount" >
   </mat-form-field>
-  <!-- <mat-checkbox [(ngModel)]="adminFlag">Admin Account</mat-checkbox> -->
   <div class="camp-signin">
     <button class="form-primary-button" mat-raised-button (click)="signin()">Sign In</button>
     <button (click)="reset()" mat-raised-button >Cancel</button>
   </div>
 </div>
 </div>
-<!-- </form> -->

@@ -12,9 +12,16 @@ import {AddadminComponent} from './addadmin/addadmin.component';
 export class AdminComponent implements OnInit {
 admins : any[];
 account : any;
+activeAccount : any;
+
 constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService, public dialog: MatDialog) { }
 
   ngOnInit() {
+
+    this.activeAccount= this.ethcontractService.getValidAccount();
+    if(this.activeAccount ==undefined){
+       this.router.navigate(['/login']);
+    }
     this.ethcontractService.getAdminUsers().then(admins=>{
       console.log(admins);
       this.admins= admins;

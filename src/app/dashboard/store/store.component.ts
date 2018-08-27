@@ -10,13 +10,17 @@ import {EthcontractService} from './../../shared/ethContract.service'
 export class StoreComponent implements OnInit {
  @Input() storeOwner : any;
  @Input() isOwner : boolean;
-
+activeAccount: any;
   stores: any[];
     constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService){
       this.isOwner =false;
     }
 
     ngOnInit() {
+      this.activeAccount= this.ethcontractService.getValidAccount();
+      if(this.activeAccount ==undefined){
+         this.router.navigate(['/login']);
+      }
       if(this.storeOwner){
         this.isOwner=true;
       }

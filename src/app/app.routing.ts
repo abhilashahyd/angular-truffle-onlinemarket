@@ -9,7 +9,6 @@ import { StoredetailsComponent } from './dashboard/store/storedetails/storedetai
 
 import{DashboardComponent} from './dashboard/dashboard.component';
 import { AppRoutes } from './app-routes.enum';
-import { SignupComponent } from './signup/signup.component';
 import { StoreownerdetailsComponent } from './dashboard/storeowner/storeownerdetails/storeownerdetails.component';
 import { AdminComponent } from './dashboard/admin/admin.component';
 import { AddproductComponent } from './dashboard/product/addproduct/addproduct.component';
@@ -81,9 +80,6 @@ const routes: Routes = [
     component: LoginComponent
     // canActivate: [LoggedInGuard]
   }
-  // ,
-  // { path: AppRoutes.Signup, component: SignupComponent }
-  // { path: AppRoutes.Signup, component: SignupComponent },
 ];
 
 

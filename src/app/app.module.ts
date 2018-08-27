@@ -29,7 +29,6 @@ import { StoreownerComponent } from './dashboard/storeowner/storeowner.component
 import { StoredetailsComponent } from './dashboard/store/storedetails/storedetails.component';
 import { ProductdetailsComponent } from './dashboard/product/productdetails/productdetails.component';
 import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { EthcontractService } from './shared/ethContract.service';
@@ -45,7 +44,6 @@ import { BuyproductComponent } from './dashboard/product/buyproduct/buyproduct.c
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent,
     DashboardComponent,
     ProductComponent,
     StoreComponent,

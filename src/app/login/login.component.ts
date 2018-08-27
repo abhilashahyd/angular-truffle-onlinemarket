@@ -22,12 +22,6 @@ accessType : string;
  signin(){
     console.log(this.activeAccount);
     var status = this.ethcontractService.setValidAccount(this.activeAccount);
-    // if(!status){
-    //     alert('Not a valid account');
-    //     this.activeAccount='';
-    //     return;
-    //   }
-      this.router.navigate(['/dashboard']);
- // });
+    this.router.navigate(['/dashboard']);
 }
 }

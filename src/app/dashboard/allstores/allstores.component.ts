@@ -15,8 +15,9 @@ export class AllstoresComponent implements OnInit {
 
       ngOnInit() {
         this.activeAccount = this.ethcontractService.getValidAccount();
-        console.log('active account');
-        console.log(this.activeAccount);
+        if(this.activeAccount ===undefined){
+           this.router.navigate(['/login']);
+        }
         this.ethcontractService.getStores('*').then((stores)=>{
        this.stores = stores;
        console.log(stores);

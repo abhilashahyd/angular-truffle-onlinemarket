@@ -18,11 +18,16 @@ export class StoreownerComponent implements OnInit {
   storeOwners: any[];
   MarketPlace : any;
   stOwner :any;
+  activeAccount: any;
     constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService, public dialog: MatDialog){
         // console.log('Constructor: ' + ethcontractService);
     }
 
     ngOnInit() {
+      this.activeAccount= this.ethcontractService.getValidAccount();
+      if(this.activeAccount ===undefined){
+         this.router.navigate(['/login']);
+      }
       this.ethcontractService.getStoreOwners().then(stOwner=>{
         console.log(stOwner);
         this.storeOwners = stOwner;
@@ -42,10 +47,10 @@ export class StoreownerComponent implements OnInit {
          console.log('The dialog was closed');
          if(result!= undefined){
          this.stOwner = result;
+         this.storeOwners.push(this.stOwner);
          console.log('Adding new storeowner');
          this.ethcontractService.addStoreOwnerDetails(this.stOwner).then(function(status){
-           this.storeOwners.push(this.stOwner);
-              console.log(status);
+          console.log(status);
       }).catch(function(error){
         console.log(error);
       });

@@ -22,6 +22,10 @@ quantity: any;
   constructor(private route: ActivatedRoute, private router: Router, private ethcontractService: EthcontractService, public dialog: MatDialog){}
 
   ngOnInit() {
+    this.activeAccount= this.ethcontractService.getValidAccount();
+    if(this.activeAccount ===undefined){
+       this.router.navigate(['/login']);
+    }
     console.log('parent',this.parent);
     this.ethcontractService.checkAccess().then(accessType=>{
       this.accessType= accessType[2];
@@ -64,6 +68,7 @@ quantity: any;
         console.log(idx);
         if(result!= undefined){
         this.quantity = result;
+        this.products[idx].productdetail[3]= this.products[idx].productdetail[3]-this.quantity;
         this.ethcontractService.buyProduct(this.store,this.selectedProductId, this.quantity ).then((products)=>{
        // this.products = products;
        console.log(products);
@@ -89,7 +94,7 @@ quantity: any;
         if(result!= undefined){
           this.selectedProduct = result;
           console.log(this.selectedProduct);
-          this.ethcontractService.updateProduct(this.store,this.selectedProduct.productId.toNumber(),this.selectedProduct.productdetails ).then((products)=>{
+          this.ethcontractService.updateProduct(this.store,this.selectedProduct.productId.toNumber(),this.selectedProduct.productdetail[0],this.selectedProduct.productdetail[1], this.selectedProduct.productdetail[2], this.selectedProduct.productdetail[3]).then((products)=>{
          // this.products = products;
          this.products[idx]=  this.selectedProduct ;
          console.log(products);
